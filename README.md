@@ -1,5 +1,6 @@
 # Udacity-project1-Azure
-This is the project 1 repository of Azure Cloud Devops
+## Goal
+After doing this project, you are able to use the terraform and packer to provision the infrastructure on Azure
 ## Dependencies:
 - An Azure account
 - The latest version of [Terraform](#https://developer.hashicorp.com/terraform/downloads) installation
