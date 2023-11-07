@@ -53,6 +53,11 @@ variable "vm_count" {
   type        = number
 }
 
+variable "server_name" {
+  type = list
+  default = ["servera", "serverb"]
+}
+
 variable "vm_type_tag" {
   default = "az_linux_vm"
 }
@@ -78,5 +83,5 @@ variable "packer_name" {
 }
 
 variable "resource_contain_packer_image" {
-  default = "Azuredevops"
+  default = "Udacity"
 }
