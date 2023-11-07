@@ -1,6 +1,13 @@
 # Udacity-project1-Azure
 ## Goal
 After doing this project, you are able to use the terraform and packer to provision the infrastructure on Azure
+## Table of contents
+- [Dependencies](#dependencies)
+- [Getting started](#getting-started)
+- [Guidelines](#guideline)
+    - [Azure policy](#azure-policy)
+    - [Packer](#packer)
+    - [Terraform](#terraform)
 ## Dependencies:
 - An Azure account
 - The latest version of [Terraform](#https://developer.hashicorp.com/terraform/downloads) installation
