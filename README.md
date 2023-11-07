@@ -14,7 +14,7 @@ After doing this project, you are able to use the terraform and packer to provis
 > git clone git@github.com:ndhoang123/Udacity-project1-Azure.git
 
 2. Install all dependencies that I listed above
-3. Export the below necessary value and save on the text editor:
+3. Export the below necessary value and save on the text editor
 - [Subscription ID](#https://learn.microsoft.com/en-us/azure/azure-portal/get-subscription-tenant-id)
 - Application ID, secret key, tenant_ID:
 > az ad sp create-for-rbac --role Contributor --scopes /subscriptions/<YourSubcriptionID> --query "{ client_id: appId, client_secret: password, tenant_id: tenant }"
