@@ -1,0 +1,40 @@
+{
+  "variables": {
+    "client_id": "c6f32ecc-e183-493d-9ec3-734e9bb0e573",
+    "client_secret": "Mpt8Q~G_KmRQcvOu~obKINW4x3bjKqm.UUgo2bgj",
+    "subscription_id": "b606b930-7045-486e-b560-e84b752ea6e3"
+  },
+  "builders": [
+    {
+      "type": "azure-arm",
+
+      "client_id": "c6f32ecc-e183-493d-9ec3-734e9bb0e573",
+      "client_secret": "Mpt8Q~G_KmRQcvOu~obKINW4x3bjKqm.UUgo2bgj",
+      "tenant_id": "c577bdde-b398-4775-9579-3becc5d82902",
+      "subscription_id": "b606b930-7045-486e-b560-e84b752ea6e3",
+
+      "os_type": "Linux",
+      "image_publisher": "Canonical",
+      "image_offer": "UbuntuServer",
+      "image_sku": "18.04-LTS",
+      
+      "managed_image_resource_group_name": "Udacity",
+      "managed_image_name": "UdaPackerImg",
+      "location": "East US",
+      "vm_size": "Standard_D2s_v3",
+      "azure_tags": {
+        "udacity": "udacity-1st-azure-devops-project"
+      }
+    }
+  ],
+  "provisioners": [
+    {
+      "inline": [
+        "echo 'Hello, World!' > index.html",
+        "nohup busybox httpd -f -p 80 &"
+      ],
+      "inline_shebang": "/bin/sh -x",
+      "type": "shell"
+    }
+  ]
+}
