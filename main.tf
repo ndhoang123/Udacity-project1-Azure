@@ -32,6 +32,7 @@ resource "azurerm_network_security_group" "main" {
 
   security_rule {
     name                       = "Allow-subnet-access"
+    description                = "Allow access to other Vms on the subnet"
     priority                   = 200
     direction                  = "Inbound"
     access                     = "Allow"
@@ -44,6 +45,7 @@ resource "azurerm_network_security_group" "main" {
 
   security_rule {
     name                       = "Deny-access-from-internet"
+    description                = "Deny direct access from the internet"
     priority                   = 100
     direction                  = "Inbound"
     access                     = "Deny"
