@@ -31,8 +31,8 @@ resource "azurerm_network_security_group" "main" {
   resource_group_name = azurerm_resource_group.main.name
 
   security_rule {
-    name                       = "Allow-subnet-access"
-    description                = "Allow access to other Vms on the subnet"
+    name                       = "Allow-subnet-access-inbound"
+    description                = "Allow inbound access to other Vms on the subnet"
     priority                   = 200
     direction                  = "Inbound"
     access                     = "Allow"
@@ -41,6 +41,32 @@ resource "azurerm_network_security_group" "main" {
     destination_port_range     = "*"
     source_address_prefix      = "VirtualNetwork"
     destination_address_prefix = "VirtualNetwork"
+  }
+
+  security_rule {
+    name                       = "Allow-subnet-access-outbound"
+    description                = "Allow outbound access to other Vms on the subnet"
+    priority                   = 201
+    direction                  = "Outbound"
+    access                     = "Allow"
+    protocol                   = "*"
+    source_port_range          = "*"
+    destination_port_range     = "*"
+    source_address_prefix      = "VirtualNetwork"
+    destination_address_prefix = "VirtualNetwork"
+  }
+
+  security_rule {
+    name                       = "http-inbound"
+    description                = "Allow access to other Vms on the subnet"
+    priority                   = 202
+    direction                  = "Inbound"
+    access                     = "Allow"
+    protocol                   = "Tcp"
+    source_port_range          = "*"
+    destination_port_range     = "80"
+    source_address_prefix      = "*"
+    destination_address_prefix = "*"
   }
 
   security_rule {
@@ -103,6 +129,12 @@ resource "azurerm_lb" "main" {
   }
 }
 
+resource "azurerm_lb_probe" "main" {
+    loadbalancer_id     = azurerm_lb.main.id
+    name                = "${var.prefix}-http-server-probe"
+    port                = 80
+}
+
 resource "azurerm_lb_backend_address_pool" "main" {
   name                = "${var.prefix}-lb-backend-addr-pool"
   loadbalancer_id     = azurerm_lb.main.id
@@ -113,8 +145,19 @@ resource "azurerm_network_interface_backend_address_pool_association" "main" {
   backend_address_pool_id = azurerm_lb_backend_address_pool.main.id
   count                   = var.vm_count
   network_interface_id    = azurerm_network_interface.main[count.index].id
- 
 }
+
+resource "azurerm_lb_rule" "main" {
+    loadbalancer_id                = azurerm_lb.main.id
+    name                           = "HTTP"
+    protocol                       = "Tcp"
+    frontend_port                  = 80
+    backend_port                   = 80
+    frontend_ip_configuration_name = azurerm_lb.main.frontend_ip_configuration[0].name
+    probe_id                       = azurerm_lb_probe.main.id
+    backend_address_pool_ids       = [azurerm_lb_backend_address_pool.main.id]
+}
+
 
 # Create the virtual machine
 resource "azurerm_availability_set" "main" {
